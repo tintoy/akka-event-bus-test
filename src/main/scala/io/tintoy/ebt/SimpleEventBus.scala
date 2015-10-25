@@ -1,14 +1,12 @@
 package io.tintoy.ebt
 
 import akka.actor.ActorRef
-import akka.event.EventBus
+import akka.event.{LookupClassification, EventBus}
 
 /**
- * A simple event bus.
+ * A simple event bus that sends notifications to subscribers associated with a topic.
  */
-class SimpleEventBus extends EventBus with akka.event.LookupClassification {
-  import SimpleEventBus._
-
+class SimpleEventBus extends EventBus with LookupClassification {
   /**
    * The containing type for events on the bus.
    */
@@ -56,12 +54,4 @@ class SimpleEventBus extends EventBus with akka.event.LookupClassification {
     subscriber1.compareTo(subscriber2)
   }
 }
-object SimpleEventBus {
 
-  /**
-   * The container for events on a [[SimpleEventBus]].
-   * @param topic The event topic.
-   * @param message The event payload.
-   */
-  case class Envelope(topic: String, message: String)
-}

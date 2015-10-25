@@ -3,25 +3,25 @@ package io.tintoy.ebt.tests
 import akka.actor.ActorSystem
 import akka.testkit._
 import com.typesafe.config.ConfigFactory
-import io.tintoy.ebt.{Envelope, SimpleEventBus}
+import io.tintoy.ebt.{Envelope, HierarchicalEventBus}
 import org.scalatest.{BeforeAndAfterEach, WordSpecLike, Matchers, BeforeAndAfterAll}
 import scala.concurrent.duration.DurationInt
 
 /**
- * Tests for [[SimpleEventBus]].
+ * Tests for [[HierarchicalEventBus]].
  */
-class SimpleEventBusSpec
-    extends TestKit(
-      ActorSystem("SimpleEventBusSpec",
-        ConfigFactory.defaultApplication()
-      )
-    ) with DefaultTimeout with ImplicitSender
-    with WordSpecLike with Matchers
-    with BeforeAndAfterAll with BeforeAndAfterEach {
+class HierarchicalEventBusSpec
+  extends TestKit(
+    ActorSystem("HierarchicalEventBusSpec",
+      ConfigFactory.defaultApplication()
+    )
+  ) with DefaultTimeout with ImplicitSender
+  with WordSpecLike with Matchers
+  with BeforeAndAfterAll with BeforeAndAfterEach {
 
-  var eventBus: SimpleEventBus = null
+  var eventBus: HierarchicalEventBus = null
 
-  "Simple event bus with 1 topic and one subscriber" should {
+  "Hierarchical event bus with 1 topic and one subscriber" should {
     "send events to a subscriber for that topic" in {
       within(500.milliseconds) {
         eventBus.subscribe(self, to = "topic1")
@@ -73,7 +73,7 @@ class SimpleEventBusSpec
   override protected def beforeEach(): Unit = {
     super.beforeEach()
 
-    eventBus = new SimpleEventBus()
+    eventBus = new HierarchicalEventBus()
   }
 
   /**
