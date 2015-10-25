@@ -21,8 +21,8 @@ class SimpleEventBusSpec
 
   var eventBus: SimpleEventBus = null
 
-  "Simple event bus with 1 topic and one subscriber" should {
-    "send events to a subscriber for that topic" in {
+  "Simple event bus with 1 subscriber for 1 topic" should {
+    "send events that subscriber if they are published with that topic" in {
       within(500.milliseconds) {
         eventBus.subscribe(self, to = "topic1")
         eventBus.publish(
@@ -37,7 +37,7 @@ class SimpleEventBusSpec
       }
     }
 
-    "not send events to a subscriber for a different topic" in {
+    "not send events to that subscriber if they are published with a different topic" in {
       within(500.milliseconds) {
         eventBus.subscribe(self, to = "topic1")
         eventBus.publish(
